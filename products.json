@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "name": "Blue Sneakers",
+    "category": "Footwear",
+    "price": 1499,
+    "size": "10",
+    "description": "Comfortable running shoes"
+  },
+  {
+    "id": 2,
+    "name": "Wireless Earbuds",
+    "category": "Electronics",
+    "price": 2499,
+    "description": "Noise cancelling bluetooth earbuds"
+  },
+  {
+    "id": 3,
+    "name": "Cotton T-Shirt",
+    "category": "Clothing",
+    "price": 499,
+    "size": "M",
+    "description": "100% cotton casual wear"
+  },
+  {
+    "id": 4,
+    "name": "Smart Watch",
+    "category": "Electronics",
+    "price": 3999,
+    "description": "Fitness tracking smartwatch"
+  },
+  {
+    "id": 5,
+    "name": "Backpack",
+    "category": "Accessories",
+    "price": 1299,
+    "description": "Water resistant laptop backpack"
+  }
+]
