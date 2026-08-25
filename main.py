@@ -9,41 +9,37 @@ import json
 
 app = FastAPI(title="REVIVEPAY")
 
-# Load mock products into DB on startup
 @app.on_event("startup")
 def load_products():
     db = next(get_db())
     if db.query(Product).count() == 0:
-        with open("products.json", "r") as f:
-            products = json.load(f)
+        with open("products.json", "r") as f2:
+            products = json.load(f2)
             for p in products:
                 db.add(Product(**p))
             db.commit()
 
-# Chat endpoint
 @app.post("/chat")
 def chat(msg: ChatMessage, db: Session = Depends(get_db)):
     response = generate_chat_response(msg.message, db)
     return {"response": response}
 
-# Get all products
 @app.get("/products")
 def get_products(db: Session = Depends(get_db)):
     return db.query(Product).all()
 
-# Initiate payment
 @app.post("/pay", response_model=PaymentResponse)
 def initiate_payment(req: PaymentRequest, db: Session = Depends(get_db)):
     product = db.query(Product).filter(Product.id == req.product_id).first()
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     
-    # Create transaction record
     txn = Transaction(
         product_id=product.id,
         product_name=product.name,
         amount=product.price,
-        status="pending"
+        status="pending",
+        customer_query=req.customer_query
     )
     db.add(txn)
     db.commit()
@@ -52,11 +48,10 @@ def initiate_payment(req: PaymentRequest, db: Session = Depends(get_db)):
     if not req.confirm:
         return PaymentResponse(
             status="awaiting_confirmation",
-            message=f"Please confirm: {product.name} - ₹{product.price}. Set confirm=true to proceed.",
+            message=f"Please confirm: {product.name} - Rs{product.price}. Set confirm=true to proceed.",
             transaction_id=txn.id
         )
     
-    # Create Razorpay payment link
     try:
         link = create_payment_link(product.name, int(product.price * 100), txn.id)
         txn.razorpay_link = link
@@ -72,15 +67,13 @@ def initiate_payment(req: PaymentRequest, db: Session = Depends(get_db)):
         txn.status = "failed"
         txn.failure_reason = str(e)
         db.commit()
-        # Trigger recovery
         recovery = handle_payment_failure(txn, db)
         return PaymentResponse(
             status="failed",
-            message=f"Payment failed. {recovery}",
+            message=recovery,
             transaction_id=txn.id
         )
 
-# Get all transactions (audit)
 @app.get("/transactions", response_model=list[TransactionLog])
 def get_transactions(db: Session = Depends(get_db)):
     return db.query(Transaction).all()

@@ -22,6 +22,7 @@ class ProductResponse(BaseModel):
 class PaymentRequest(BaseModel):
     product_id: int
     confirm: bool = False
+    customer_query: Optional[str] = None
 
 # For payment response
 class PaymentResponse(BaseModel):
