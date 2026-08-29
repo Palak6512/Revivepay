@@ -32,16 +32,18 @@ REVIVEPAY is an AI-powered conversational checkout agent for small merchants. Cu
 
 ## 🏗️ Architecture
 
+```
 Customer Chat
-↓
+    ↓
 [AI Agent] → Product Search (SQLite)
-↓
+    ↓
 [Payment Engine] → Razorpay Payment Link (with confirmation guardrail)
-↓
+    ↓
 [Success] → Upsell / Complete
 [Failure] → [Recovery Engine] → Smart retry / switch / save
-↓
+    ↓
 [Audit Log] → SQLite Transactions Table
+```
 
 ---
 
@@ -68,8 +70,10 @@ pip install -r requirements.txt
 
 ### 2. Add API Keys
 Create a `.env` file:
+```
 RAZORPAY_KEY_ID=your_test_key
 RAZORPAY_KEY_SECRET=your_test_secret
+```
 
 ### 3. Run Backend
 ```bash
