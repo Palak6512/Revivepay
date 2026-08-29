@@ -35,5 +35,26 @@
     "category": "Accessories",
     "price": 1299,
     "description": "Water resistant laptop backpack"
+  },
+  {
+    "id": 6,
+    "name": "Baseball Cap",
+    "category": "Accessories",
+    "price": 349,
+    "description": "Casual cotton cap"
+  },
+  {
+    "id": 7,
+    "name": "Sunglasses",
+    "category": "Accessories",
+    "price": 899,
+    "description": "UV protection sunglasses"
+  },
+  {
+    "id": 8,
+    "name": "Running Shorts",
+    "category": "Clothing",
+    "price": 799,
+    "description": "Breathable athletic shorts"
   }
 ]
