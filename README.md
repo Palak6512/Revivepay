@@ -114,6 +114,13 @@ Needed to differentiate between retryable failures (timeout) vs non-retryable (i
 Tested and confirmed the API gracefully rejects invalid requests (e.g., a nonexistent `product_id`) with a clean 404 response instead of crashing — verified via direct API calls.
 
 ---
+## 🔮 Limitations & Future Work
+
+- **Rule-based, not LLM-based:** Product search, upsell recommendations, and failure recovery currently use deterministic keyword-matching and rule-based logic rather than LLM calls. This was a deliberate choice — for a small, fixed catalog, rules are faster, cheaper, and fully explainable with zero hallucination risk. A future version could use an LLM for more open-ended queries or ambiguous failure diagnosis where rules alone aren't sufficient.
+- **Upsell mapping is static:** Currently a fixed lookup by product ID. A future version would personalize suggestions using purchase history or embeddings.
+- **Recovery Response Rate measures guidance coverage, not confirmed recovery:** It currently tracks the percentage of failed transactions that received a recovery message, not whether the customer ultimately completed the payment. A future version would track actual retry-to-success conversion.
+
+---
 
 ## 👤 Author
 
