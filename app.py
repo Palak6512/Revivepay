@@ -92,7 +92,7 @@ with st.sidebar:
                 st.progress(success_rate / 100, text=f"Success Rate: {success_rate:.1f}%")
             if failed > 0:
                 recovery_rate = (recovered / failed) * 100
-                st.progress(recovery_rate / 100, text=f"Recovery Rate: {recovery_rate:.1f}%")
+                st.progress(recovery_rate / 100, text=f"Recovery Response Rate: {recovery_rate:.1f}%")
 
         except Exception:
             st.warning("Start backend to see analytics")
